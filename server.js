@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const { response } = require('express')
 const MongoClient = require('mongodb').MongoClient
 require('dotenv').config()
 
@@ -24,8 +25,12 @@ app.use(express.json())
 app.use(cors())
 
 // Routes
-app.get('/', (req, res) => {
-    res.render('index')
+app.get('/', async (req, res) => {
+    try {
+        res.render('index')
+    } catch (error) {
+        response.status(500).send({message: error.message })
+    }
 })
 
 
